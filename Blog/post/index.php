@@ -2,9 +2,10 @@
     include_once $_SERVER['DOCUMENT_ROOT'].'/Blog/resources/functions.php';
     session_start();
     $id = (int)$_GET['id'];
-    $post = get_post_by_id($id);
-    $category = get_category_by_id($post['id_category']);
-    $author = get_author_by_id($post['id_author']);
+    $postObject = new Post();
+    $post = $postObject->get_post_by_id($id);
+    $category = $postObject->get_category_by_id($post['id_category']);
+    $author = $postObject->get_author_by_id($post['id_author']);
 ?>
 
 <!DOCTYPE html>

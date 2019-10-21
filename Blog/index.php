@@ -1,7 +1,9 @@
 <?php
     include_once $_SERVER['DOCUMENT_ROOT'].'/Blog/resources/functions.php';
     session_start();
-    $posts = get_start_posts();
+//    $posts = get_start_posts();
+    $postObject = new Post();
+    $posts = $postObject->get_start_posts();
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +32,7 @@
 <div class="main">
     <ul>
         <?php foreach ($posts as $post):
-            $category = get_category_by_id($post['id_category']); ?>
+            $category = $postObject->get_category_by_id($post['id_category']); ?>
         <li class="blog-post">
             <a href="/Blog/post/?id=<?php echo $post['id']; ?>">
                 <p class="image"><img src="<?php echo $post['img'] ?>" height="200px" width="200px"></p>
@@ -74,14 +76,6 @@
         return false;
     });
 
-    // function addBack() {
-    //     $('.head').addClass('back');
-    // }
-    //
-    // window.onload = function() {
-    //     setTimeout(addBack, -1000);
-    // };
-
     $('.show-more').click(function() {
         let show_more = $(this);
         let count_show = parseInt($(this).attr('count_show'));
@@ -105,7 +99,8 @@
                 if (res.result == "success" && res.html != "") {
                     $('.main ul').append(res.html);
                     show_more.text('Показать еще');
-                    show_more.attr('count_show', (count_show + 6));
+                    count_show += 6;
+                    show_more.attr('count_show', count_show);
                     console.log(count_show, countPosts);
                     if (countPosts - count_show < 6) {
                         show_more.attr('count_show', (count_show + (countPosts - count_show)));
