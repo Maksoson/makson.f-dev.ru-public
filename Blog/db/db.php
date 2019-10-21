@@ -1,6 +1,13 @@
 <?php
 class DB
 {
+    protected $db;
+
+    public function __construct()
+    {
+        $this->db = self::getDb();
+    }
+
     public static function getDb()
     {
         $config = include $_SERVER["DOCUMENT_ROOT"]."/config/dbconfig.php";

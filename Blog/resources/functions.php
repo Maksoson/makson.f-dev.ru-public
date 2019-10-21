@@ -10,8 +10,8 @@ class Post extends DB
 
     function get_start_posts()
     {
-        $db = DB::getDb();
-        $result = $db->prepare("SELECT * FROM posts ORDER BY id ASC LIMIT 6");
+//        $db = self::getDb();
+        $result = $this->db->prepare("SELECT * FROM posts ORDER BY id ASC LIMIT 6");
         $result->execute();
         $result->setFetchMode(\PDO::FETCH_ASSOC);
         $this->posts = $result->fetchAll();
@@ -21,8 +21,8 @@ class Post extends DB
 
     public function get_post_by_id($id)
     {
-        $db = DB::getDb();
-        $result = $db->prepare("SELECT * FROM posts WHERE id = :id");
+//        $db = self::getDb();
+        $result = $this->db->prepare("SELECT * FROM posts WHERE id = :id");
         $result->bindParam(':id', $id);
         $result->execute();
         $result->setFetchMode(\PDO::FETCH_ASSOC);
@@ -34,8 +34,8 @@ class Post extends DB
 
     function get_count_posts()
     {
-        $db = DB::getDb();
-        $result = $db->prepare("SELECT COUNT(*) FROM posts");
+//        $db = self::getDb();
+        $result = $this->db->prepare("SELECT COUNT(*) FROM posts");
         $result->execute();
         $this->count = (int) $result->fetchColumn();
 
@@ -45,8 +45,8 @@ class Post extends DB
     // Выбор названия категории по id
     function get_category_by_id($id)
     {
-        $db = DB::getDb();
-        $result = $db->prepare("SELECT * FROM categories WHERE id = :id");
+//        $db = self::getDb();
+        $result = $this->db->prepare("SELECT * FROM categories WHERE id = :id");
         $result->bindParam(':id', $id);
         $result->execute();
         $result->setFetchMode(\PDO::FETCH_ASSOC);
@@ -59,8 +59,8 @@ class Post extends DB
     // Выбор имени автора по id
     function get_author_by_id($id)
     {
-        $db = DB::getDb();
-        $result = $db->prepare("SELECT * FROM authors WHERE id = :id");
+//        $db = self::getDb();
+        $result = $this->db->prepare("SELECT * FROM authors WHERE id = :id");
         $result->bindParam(':id', $id);
         $result->execute();
         $result->setFetchMode(\PDO::FETCH_ASSOC);
@@ -73,11 +73,11 @@ class Post extends DB
     // Показать еще
     function show_more()
     {
-        $db = \DB::getDb();
+//        $db = self::getDb();
         $startIndex = (int)$_POST['count_show'];
         $countView = (int)$_POST['count_add'];
 
-        $result = $db->prepare('SELECT * FROM `posts` ORDER BY id ASC LIMIT :startIndex, :countView');
+        $result = $this->db->prepare('SELECT * FROM `posts` ORDER BY id ASC LIMIT :startIndex, :countView');
         $result->bindValue(':startIndex', $startIndex, PDO::PARAM_INT);
         $result->bindValue(':countView', $countView, PDO::PARAM_INT);
         $result->execute();
